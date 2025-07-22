@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clicker Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <!-- Header -->
+        <header class="game-header">
+            <h1>🍪 Cookie Empire</h1>
+            <div class="stats">
+                <div class="stat">
+                    <span class="stat-label">Cookies:</span>
+                    <span id="cookies" class="stat-value">0</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Per Second:</span>
+                    <span id="cps" class="stat-value">0</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Total Clicks:</span>
+                    <span id="totalClicks" class="stat-value">0</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="game-content">
+            <!-- Main Clicker Area -->
+            <div class="clicker-section">
+                <div class="cookie-container">
+                    <button id="cookieButton" class="cookie-button">
+                        <div class="cookie">🍪</div>
+                        <div class="click-effect" id="clickEffect"></div>
+                    </button>
+                    <div class="click-value" id="clickValue">+1</div>
+                </div>
+                
+                <div class="multiplier-display">
+                    <span>Click Power: <span id="clickPower">1</span></span>
+                </div>
+            </div>
+
+            <!-- Upgrades Panel -->
+            <div class="upgrades-section">
+                <div class="tabs">
+                    <button class="tab-button active" data-tab="buildings">Buildings</button>
+                    <button class="tab-button" data-tab="upgrades">Upgrades</button>
+                    <button class="tab-button" data-tab="achievements">Achievements</button>
+                </div>
+
+                <!-- Buildings Tab -->
+                <div id="buildings" class="tab-content active">
+                    <h3>Auto Producers</h3>
+                    <div class="buildings-list">
+                        <div class="building" data-building="cursor">
+                            <div class="building-icon">👆</div>
+                            <div class="building-info">
+                                <h4>Auto Cursor</h4>
+                                <p>Clicks automatically every second</p>
+                                <div class="building-stats">
+                                    <span>Owned: <span class="building-count">0</span></span>
+                                    <span>Production: <span class="building-production">0.1</span>/sec</span>
+                                </div>
+                            </div>
+                            <div class="building-buy">
+                                <span class="building-price">15</span>
+                                <button class="buy-button">Buy</button>
+                            </div>
+                        </div>
+
+                        <div class="building" data-building="grandma">
+                            <div class="building-icon">👵</div>
+                            <div class="building-info">
+                                <h4>Grandma</h4>
+                                <p>Bakes cookies with love</p>
+                                <div class="building-stats">
+                                    <span>Owned: <span class="building-count">0</span></span>
+                                    <span>Production: <span class="building-production">1</span>/sec</span>
+                                </div>
+                            </div>
+                            <div class="building-buy">
+                                <span class="building-price">100</span>
+                                <button class="buy-button">Buy</button>
+                            </div>
+                        </div>
+
+                        <div class="building" data-building="farm">
+                            <div class="building-icon">🚜</div>
+                            <div class="building-info">
+                                <h4>Cookie Farm</h4>
+                                <p>Grows cookie dough naturally</p>
+                                <div class="building-stats">
+                                    <span>Owned: <span class="building-count">0</span></span>
+                                    <span>Production: <span class="building-production">8</span>/sec</span>
+                                </div>
+                            </div>
+                            <div class="building-buy">
+                                <span class="building-price">1100</span>
+                                <button class="buy-button">Buy</button>
+                            </div>
+                        </div>
+
+                        <div class="building" data-building="mine">
+                            <div class="building-icon">⛏️</div>
+                            <div class="building-info">
+                                <h4>Cookie Mine</h4>
+                                <p>Mines chocolate chips</p>
+                                <div class="building-stats">
+                                    <span>Owned: <span class="building-count">0</span></span>
+                                    <span>Production: <span class="building-production">47</span>/sec</span>
+                                </div>
+                            </div>
+                            <div class="building-buy">
+                                <span class="building-price">12000</span>
+                                <button class="buy-button">Buy</button>
+                            </div>
+                        </div>
+
+                        <div class="building" data-building="factory">
+                            <div class="building-icon">🏭</div>
+                            <div class="building-info">
+                                <h4>Cookie Factory</h4>
+                                <p>Mass produces cookies</p>
+                                <div class="building-stats">
+                                    <span>Owned: <span class="building-count">0</span></span>
+                                    <span>Production: <span class="building-production">260</span>/sec</span>
+                                </div>
+                            </div>
+                            <div class="building-buy">
+                                <span class="building-price">130000</span>
+                                <button class="buy-button">Buy</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upgrades Tab -->
+                <div id="upgrades" class="tab-content">
+                    <h3>Click Upgrades</h3>
+                    <div class="upgrades-list">
+                        <div class="upgrade" data-upgrade="doubleClick">
+                            <div class="upgrade-icon">⚡</div>
+                            <div class="upgrade-info">
+                                <h4>Double Click</h4>
+                                <p>Double your click power</p>
+                            </div>
+                            <div class="upgrade-buy">
+                                <span class="upgrade-price">500</span>
+                                <button class="buy-upgrade-button">Buy</button>
+                            </div>
+                        </div>
+
+                        <div class="upgrade" data-upgrade="goldenTouch">
+                            <div class="upgrade-icon">✨</div>
+                            <div class="upgrade-info">
+                                <h4>Golden Touch</h4>
+                                <p>Click power x5</p>
+                            </div>
+                            <div class="upgrade-buy">
+                                <span class="upgrade-price">5000</span>
+                                <button class="buy-upgrade-button">Buy</button>
+                            </div>
+                        </div>
+
+                        <div class="upgrade" data-upgrade="megaClick">
+                            <div class="upgrade-icon">💥</div>
+                            <div class="upgrade-info">
+                                <h4>Mega Click</h4>
+                                <p>Click power x10</p>
+                            </div>
+                            <div class="upgrade-buy">
+                                <span class="upgrade-price">50000</span>
+                                <button class="buy-upgrade-button">Buy</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Achievements Tab -->
+                <div id="achievements" class="tab-content">
+                    <h3>Achievements</h3>
+                    <div class="achievements-list">
+                        <div class="achievement" data-achievement="firstClick">
+                            <div class="achievement-icon">🎯</div>
+                            <div class="achievement-info">
+                                <h4>First Click</h4>
+                                <p>Click the cookie for the first time</p>
+                            </div>
+                            <div class="achievement-status">Locked</div>
+                        </div>
+
+                        <div class="achievement" data-achievement="hundredClicks">
+                            <div class="achievement-icon">💯</div>
+                            <div class="achievement-info">
+                                <h4>Century</h4>
+                                <p>Click 100 times</p>
+                            </div>
+                            <div class="achievement-status">Locked</div>
+                        </div>
+
+                        <div class="achievement" data-achievement="thousandCookies">
+                            <div class="achievement-icon">🍪</div>
+                            <div class="achievement-info">
+                                <h4>Cookie Master</h4>
+                                <p>Collect 1,000 cookies</p>
+                            </div>
+                            <div class="achievement-status">Locked</div>
+                        </div>
+
+                        <div class="achievement" data-achievement="firstBuilding">
+                            <div class="achievement-icon">🏗️</div>
+                            <div class="achievement-info">
+                                <h4>Builder</h4>
+                                <p>Buy your first building</p>
+                            </div>
+                            <div class="achievement-status">Locked</div>
+                        </div>
+
+                        <div class="achievement" data-achievement="millionaire">
+                            <div class="achievement-icon">💰</div>
+                            <div class="achievement-info">
+                                <h4>Millionaire</h4>
+                                <p>Collect 1,000,000 cookies</p>
+                            </div>
+                            <div class="achievement-status">Locked</div>
+                        </div>
+
+                        <div class="achievement" data-achievement="clickMaster">
+                            <div class="achievement-icon">👑</div>
+                            <div class="achievement-info">
+                                <h4>Click Master</h4>
+                                <p>Click 1,000 times</p>
+                            </div>
+                            <div class="achievement-status">Locked</div>
+                        </div>
+
+                        <div class="achievement" data-achievement="tenThousandCookies">
+                            <div class="achievement-icon">🎯</div>
+                            <div class="achievement-info">
+                                <h4>Cookie Hoarder</h4>
+                                <p>Collect 10,000 cookies</p>
+                            </div>
+                            <div class="achievement-status">Locked</div>
+                        </div>
+
+                        <div class="achievement" data-achievement="speedClicker">
+                            <div class="achievement-icon">⚡</div>
+                            <div class="achievement-info">
+                                <h4>Speed Clicker</h4>
+                                <p>Click 10 times in 1 second</p>
+                            </div>
+                            <div class="achievement-status">Locked</div>
+                        </div>
+
+                        <div class="achievement" data-achievement="tenBuildings">
+                            <div class="achievement-icon">🏗️</div>
+                            <div class="achievement-info">
+                                <h4>Industrial Tycoon</h4>
+                                <p>Own 10 buildings total</p>
+                            </div>
+                            <div class="achievement-status">Locked</div>
+                        </div>
+
+                        <div class="achievement" data-achievement="hundredBuildings">
+                            <div class="achievement-icon">🏭</div>
+                            <div class="achievement-info">
+                                <h4>Cookie Empire</h4>
+                                <p>Own 100 buildings total</p>
+                            </div>
+                            <div class="achievement-status">Locked</div>
+                        </div>
+
+                        <div class="achievement" data-achievement="billionaire">
+                            <div class="achievement-icon">💎</div>
+                            <div class="achievement-info">
+                                <h4>Billionaire</h4>
+                                <p>Collect 1,000,000,000 cookies</p>
+                            </div>
+                            <div class="achievement-status">Locked</div>
+                        </div>
+
+                        <div class="achievement" data-achievement="hundredCPS">
+                            <div class="achievement-icon">🔥</div>
+                            <div class="achievement-info">
+                                <h4>Cookie Machine</h4>
+                                <p>Reach 100 cookies per second</p>
+                            </div>
+                            <div class="achievement-status">Locked</div>
+                        </div>
+
+                        <div class="achievement" data-achievement="thousandCPS">
+                            <div class="achievement-icon">🚀</div>
+                            <div class="achievement-info">
+                                <h4>Cookie Rocket</h4>
+                                <p>Reach 1,000 cookies per second</p>
+                            </div>
+                            <div class="achievement-status">Locked</div>
+                        </div>
+
+                        <div class="achievement" data-achievement="allUpgrades">
+                            <div class="achievement-icon">⭐</div>
+                            <div class="achievement-info">
+                                <h4>Perfectionist</h4>
+                                <p>Buy all click upgrades</p>
+                            </div>
+                            <div class="achievement-status">Locked</div>
+                        </div>
+
+                        <div class="achievement" data-achievement="tenThousandClicks">
+                            <div class="achievement-icon">🎖️</div>
+                            <div class="achievement-info">
+                                <h4>Click Veteran</h4>
+                                <p>Click 10,000 times</p>
+                            </div>
+                            <div class="achievement-status">Locked</div>
+                        </div>
+
+                        <div class="achievement" data-achievement="oneCursor">
+                            <div class="achievement-icon">👆</div>
+                            <div class="achievement-info">
+                                <h4>First Helper</h4>
+                                <p>Buy your first Auto Cursor</p>
+                            </div>
+                            <div class="achievement-status">Locked</div>
+                        </div>
+
+                        <div class="achievement" data-achievement="oneGrandma">
+                            <div class="achievement-icon">👵</div>
+                            <div class="achievement-info">
+                                <h4>Grandma's Love</h4>
+                                <p>Buy your first Grandma</p>
+                            </div>
+                            <div class="achievement-status">Locked</div>
+                        </div>
+
+                        <div class="achievement" data-achievement="oneFarm">
+                            <div class="achievement-icon">🚜</div>
+                            <div class="achievement-info">
+                                <h4>Farmer</h4>
+                                <p>Buy your first Cookie Farm</p>
+                            </div>
+                            <div class="achievement-status">Locked</div>
+                        </div>
+
+                        <div class="achievement" data-achievement="oneMine">
+                            <div class="achievement-icon">⛏️</div>
+                            <div class="achievement-info">
+                                <h4>Miner</h4>
+                                <p>Buy your first Cookie Mine</p>
+                            </div>
+                            <div class="achievement-status">Locked</div>
+                        </div>
+
+                        <div class="achievement" data-achievement="oneFactory">
+                            <div class="achievement-icon">🏭</div>
+                            <div class="achievement-info">
+                                <h4>Industrialist</h4>
+                                <p>Buy your first Cookie Factory</p>
+                            </div>
+                            <div class="achievement-status">Locked</div>
+                        </div>
+
+                        <div class="achievement" data-achievement="goldenCookieHunter">
+                            <div class="achievement-icon">✨</div>
+                            <div class="achievement-info">
+                                <h4>Golden Hunter</h4>
+                                <p>Click 5 Golden Cookies</p>
+                            </div>
+                            <div class="achievement-status">Locked</div>
+                        </div>
+
+                        <div class="achievement" data-achievement="marathonClicker">
+                            <div class="achievement-icon">🏃</div>
+                            <div class="achievement-info">
+                                <h4>Marathon Clicker</h4>
+                                <p>Click 100,000 times</p>
+                            </div>
+                            <div class="achievement-status">Locked</div>
+                        </div>
+
+                        <div class="achievement" data-achievement="trillionaire">
+                            <div class="achievement-icon">🌟</div>
+                            <div class="achievement-info">
+                                <h4>Trillionaire</h4>
+                                <p>Collect 1,000,000,000,000 cookies</p>
+                            </div>
+                            <div class="achievement-status">Locked</div>
+                        </div>
+
+                        <div class="achievement" data-achievement="megaCPS">
+                            <div class="achievement-icon">💥</div>
+                            <div class="achievement-info">
+                                <h4>Cookie Supernova</h4>
+                                <p>Reach 10,000 cookies per second</p>
+                            </div>
+                            <div class="achievement-status">Locked</div>
+                        </div>
+
+                        <div class="achievement" data-achievement="fiveFarms">
+                            <div class="achievement-icon">🌾</div>
+                            <div class="achievement-info">
+                                <h4>Agriculture Expert</h4>
+                                <p>Own 5 Cookie Farms</p>
+                            </div>
+                            <div class="achievement-status">Locked</div>
+                        </div>
+
+                        <div class="achievement" data-achievement="tenFactories">
+                            <div class="achievement-icon">🏭</div>
+                            <div class="achievement-info">
+                                <h4>Factory Owner</h4>
+                                <p>Own 10 Cookie Factories</p>
+                            </div>
+                            <div class="achievement-status">Locked</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Save/Load Controls -->
+        <div class="controls">
+            <button id="saveGame" class="control-button">💾 Save Game</button>
+            <button id="loadGame" class="control-button">📁 Load Game</button>
+            <button id="resetGame" class="control-button reset">🔄 Reset Game</button>
+        </div>
+
+        <!-- Notification System -->
+        <div id="notifications" class="notifications"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
