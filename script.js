@@ -408,37 +408,45 @@ class ClickerGame {
     }
 
     startGameLoop() {
-        setInterval(() => {
-            if (this.gameState.cps > 0) {
-                this.gameState.cookies += this.gameState.cps / 10; // 100ms intervals for smooth animation
-                this.updateDisplay();
-                this.checkAchievements();
-            }
-        }, 100);
-    }
+    // Load game when starting
+    this.loadGame();
+    
+    setInterval(() => {
+        if (this.gameState.cps > 0) {
+            this.gameState.cookies += this.gameState.cps / 10;
+            this.updateDisplay();
+            this.checkAchievements();
+        }
+    }, 100);
+    
+    // Auto-save every 30 seconds
+    setInterval(() => {
+        this.saveGame();
+    }, 30000);
+}
 
     saveGame() {
-        const gameData = JSON.stringify(this.gameState);
-        // Using a simple variable to store since localStorage is not supported
-        this.savedGame = gameData;
-        this.showNotification('Game saved successfully!');
-    }
+    const gameData = JSON.stringify(this.gameState);
+    localStorage.setItem('cookieEmpireGame', gameData);
+    this.showNotification('Game saved successfully!');
+}
 
     loadGame() {
-        if (this.savedGame) {
-            try {
-                this.gameState = JSON.parse(this.savedGame);
-                this.updateCPS();
-                this.updateClickPower();
-                this.updateDisplay();
-                this.showNotification('Game loaded successfully!');
-            } catch (e) {
-                this.showNotification('Failed to load game data!');
-            }
-        } else {
-            this.showNotification('No saved game found!');
+    const savedData = localStorage.getItem('cookieEmpireGame');
+    if (savedData) {
+        try {
+            this.gameState = JSON.parse(savedData);
+            this.updateCPS();
+            this.updateClickPower();
+            this.updateDisplay();
+            this.showNotification('Game loaded successfully!');
+        } catch (e) {
+            this.showNotification('Failed to load game data!');
         }
+    } else {
+        this.showNotification('No saved game found!');
     }
+}
 
     resetGame() {
         this.gameState = {
